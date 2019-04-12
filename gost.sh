@@ -3,7 +3,8 @@
 #*****************
 # GOST搭建脚本
 # by supppig
-#  v2.0
+# modification Long <31891692@qq.com>
+#  v2.1
 #****************
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
@@ -72,12 +73,13 @@ function pre_install(){
 	echo "***************"
 	echo " GOST搭建脚本"
 	echo " by supppig"
-	echo "    v2.0"
+	echo " modification Long <31891692@qq.com>"
+	echo "    v2.1"
 	echo "  2017.2.25"
 	echo "***************"
 	echo ""
     echo "输入gost的密码（请只使用数字和字母组合，不要用点，中下划线等特殊字符，以免出现兼容性问题）:"
-    read -p "(默认密码: supppig):" gostpwd
+    read -p "(默认密码: 31891692):" gostpwd
 	[ -z "$gostpwd" ] && gostpwd="31891692"
 	echo
 	if ! [[ $gostpwd =~ ^[a-zA-Z0-9]+$ ]];then
@@ -103,7 +105,7 @@ function pre_install(){
     echo "---------------------------"
     echo	
     echo "选择下载源，1是国内源（TaoCode），2是国外源（github）。按照vps所处的地理位置选择，可以加快下载速度。"
-    read -p "(默认国内源):" xzy
+    read -p "(默认国外源):" xzy
     [ -z "$xzy" ] && xzy="2"
     echo
     echo "---------------------------"
@@ -112,7 +114,7 @@ function pre_install(){
     echo	
 		
 	if [ "$xzy" == "2" ];then
-	    xzy="https://github.com/ginuerzh/gost/releases/download/v2.3/gost_2.3_linux_amd64.tar.gz"
+	    xzy="https://github.com/Mr-LongFly/gost/raw/master/gost_2.3_linux_amd64.tar.gz"
     else
 	    xzy="https://code.aliyun.com/supppig/gost/raw/master/gost_2.3_linux_amd64.tar.gz"
 	fi
