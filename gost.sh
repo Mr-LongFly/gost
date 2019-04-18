@@ -490,8 +490,10 @@ clear
 	echo "***************"
 	echo " GOST搭建脚本"
 	echo " by supppig"
-	echo "    v2.0"
-	echo "  2017.2.25"
+	echo "modification <31891692@qq.com>"
+	echo " 感谢 supppig"
+	echo "    v2.1"
+	echo "  2019.04.12"
 	echo "***************"
 	echo ""
 check_gost
