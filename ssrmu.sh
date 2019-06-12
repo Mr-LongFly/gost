@@ -1649,7 +1649,9 @@ Other_functions(){
 	elif [[ ${other_num} == "2" ]]; then
 		if [[ ! -e "/usr/local/sbin/gost" ] || [ ! -e "/usr/local/gost" ]]; then
 			echo -e "${Error} 已经安装，请直接使用gost命令 !" && exit 1
-		wget -N --no-check-certificate "https://github.com/Mr-LongFly/gost/raw/master/gost.sh" && bash gost.sh
+		else 
+			wget -N --no-check-certificate "https://github.com/Mr-LongFly/gost/raw/master/gost.sh" && bash gost.sh
+		fi
 	elif [[ ${other_num} == "3" ]]; then
 		Configure_LotServer
 	elif [[ ${other_num} == "4" ]]; then
