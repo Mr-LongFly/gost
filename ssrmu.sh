@@ -63,7 +63,7 @@ SSR_installation_status(){
 	[[ ! -e ${ssr_folder} ]] && echo -e "${Error} 没有发现 ShadowsocksR 文件夹，请检查 !" && exit 1
 }
 Server_Speeder_installation_status(){
-	[[ ! -e ${Server_Speeder_file} ]] && echo -e "${Error} 没有安装 锐速(Server Speeder)，请检查 !" && exit 1
+	[[ ! -e ${Server_Speeder_file} ]] && echo -e "${Error} 没有安装，请检查 !" && exit 1
 }
 LotServer_installation_status(){
 	[[ ! -e ${LotServer_file} ]] && echo -e "${Error} 没有安装 LotServer，请检查 !" && exit 1
@@ -72,11 +72,11 @@ BBR_installation_status(){
 	if [[ ! -e ${BBR_file} ]]; then
 		echo -e "${Error} 没有发现 BBR脚本，开始下载..."
 		cd "${file}"
-		if ! wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/bbr.sh; then
+		if ! wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"; then
 			echo -e "${Error} BBR 脚本下载失败 !" && exit 1
 		else
 			echo -e "${Info} BBR 脚本下载完成 !"
-			chmod +x bbr.sh
+			chmod +x tcp.sh
 		fi
 	fi
 }
@@ -1459,13 +1459,13 @@ View_Log(){
 # 锐速
 Configure_Server_Speeder(){
 	echo && echo -e "你要做什么？
- ${Green_font_prefix}1.${Font_color_suffix} 安装 锐速
- ${Green_font_prefix}2.${Font_color_suffix} 卸载 锐速
+ ${Green_font_prefix}1.${Font_color_suffix} 安装 GOST
+ ${Green_font_prefix}2.${Font_color_suffix} 卸载 GOST
 ————————
- ${Green_font_prefix}3.${Font_color_suffix} 启动 锐速
- ${Green_font_prefix}4.${Font_color_suffix} 停止 锐速
- ${Green_font_prefix}5.${Font_color_suffix} 重启 锐速
- ${Green_font_prefix}6.${Font_color_suffix} 查看 锐速 状态
+ ${Green_font_prefix}3.${Font_color_suffix} 启动 GOST
+ ${Green_font_prefix}4.${Font_color_suffix} 停止 GOST
+ ${Green_font_prefix}5.${Font_color_suffix} 重启 GOST
+ ${Green_font_prefix}6.${Font_color_suffix} 查看 GOST 状态
  
  注意： 锐速和LotServer不能同时安装/启动！" && echo
 	read -e -p "(默认: 取消):" server_speeder_num
@@ -1477,46 +1477,31 @@ Configure_Server_Speeder(){
 		Uninstall_ServerSpeeder
 	elif [[ ${server_speeder_num} == "3" ]]; then
 		Server_Speeder_installation_status
-		${Server_Speeder_file} start
-		${Server_Speeder_file} status
+		gost start
 	elif [[ ${server_speeder_num} == "4" ]]; then
 		Server_Speeder_installation_status
-		${Server_Speeder_file} stop
+		gost stop
 	elif [[ ${server_speeder_num} == "5" ]]; then
 		Server_Speeder_installation_status
-		${Server_Speeder_file} restart
-		${Server_Speeder_file} status
+		gost start
 	elif [[ ${server_speeder_num} == "6" ]]; then
 		Server_Speeder_installation_status
-		${Server_Speeder_file} status
+		gost check
 	else
 		echo -e "${Error} 请输入正确的数字(1-6)" && exit 1
 	fi
 }
 Install_ServerSpeeder(){
-	[[ -e ${Server_Speeder_file} ]] && echo -e "${Error} 锐速(Server Speeder) 已安装 !" && exit 1
-	#借用91yun.rog的开心版锐速
-	wget --no-check-certificate -qO /tmp/serverspeeder.sh https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder.sh
-	[[ ! -e "/tmp/serverspeeder.sh" ]] && echo -e "${Error} 锐速安装脚本下载失败 !" && exit 1
-	bash /tmp/serverspeeder.sh
-	sleep 2s
-	PID=`ps -ef |grep -v grep |grep "serverspeeder" |awk '{print $2}'`
-	if [[ ! -z ${PID} ]]; then
-		rm -rf /tmp/serverspeeder.sh
-		rm -rf /tmp/91yunserverspeeder
-		rm -rf /tmp/91yunserverspeeder.tar.gz
-		echo -e "${Info} 锐速(Server Speeder) 安装完成 !" && exit 1
-	else
-		echo -e "${Error} 锐速(Server Speeder) 安装失败 !" && exit 1
-	fi
-}
+	[[ -e ${Server_Speeder_file} ]] && echo -e "${Error} GOST 已安装 !" && exit 1
+	wget --no-check-certificate -qO /tmp/gost.sh https://github.com/Mr-LongFly/gost/raw/master/gost.sh
+	bash /tmp/gost.sh
+	
 Uninstall_ServerSpeeder(){
 	echo "确定要卸载 锐速(Server Speeder)？[y/N]" && echo
 	read -e -p "(默认: n):" unyn
 	[[ -z ${unyn} ]] && echo && echo "已取消..." && exit 1
 	if [[ ${unyn} == [Yy] ]]; then
-		chattr -i /serverspeeder/etc/apx*
-		/serverspeeder/bin/serverSpeeder.sh uninstall -f
+		gost uninstall
 		echo && echo "锐速(Server Speeder) 卸载完成 !" && echo
 	fi
 }
@@ -1614,22 +1599,22 @@ Install_BBR(){
 }
 Start_BBR(){
 	BBR_installation_status
-	bash "${BBR_file}" start
+	bash "${BBR_file}"
 }
 Stop_BBR(){
 	BBR_installation_status
-	bash "${BBR_file}" stop
+	bash "${BBR_file}"
 }
 Status_BBR(){
 	BBR_installation_status
-	bash "${BBR_file}" status
+	bash "${BBR_file}"
 }
 # 其他功能
 Other_functions(){
 	echo && echo -e "  你要做什么？
 	
-  ${Green_font_prefix}1.${Font_color_suffix} 配置 BBR
-  ${Green_font_prefix}2.${Font_color_suffix} 配置 锐速(ServerSpeeder)
+  ${Green_font_prefix}1.${Font_color_suffix} 配置 BBR 锐速 魔改bbr
+  ${Green_font_prefix}2.${Font_color_suffix} 配置 GOST
   ${Green_font_prefix}3.${Font_color_suffix} 配置 LotServer(锐速母公司)
   ${Tip} 锐速/LotServer/BBR 不支持 OpenVZ！
   ${Tip} 锐速和LotServer不能共存！
