@@ -1647,7 +1647,8 @@ Other_functions(){
 		wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"
 		chmod +x tcp.sh && ./tcp.sh
 	elif [[ ${other_num} == "2" ]]; then
-		if [[ ! -e "/usr/local/sbin/gost" ] || [ ! -e "/usr/local/gost" ]] && echo -e "${Error} 已经安装，请直接使用gost命令 !" && exit 1
+		if [[ ! -e "/usr/local/sbin/gost" ] || [ ! -e "/usr/local/gost" ]]; then
+			echo -e "${Error} 已经安装，请直接使用gost命令 !" && exit 1
 		wget -N --no-check-certificate "https://github.com/Mr-LongFly/gost/raw/master/gost.sh" && bash gost.sh
 	elif [[ ${other_num} == "3" ]]; then
 		Configure_LotServer
