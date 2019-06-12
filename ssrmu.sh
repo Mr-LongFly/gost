@@ -1650,7 +1650,7 @@ Other_functions(){
 		if [[ ! -f "/usr/local/sbin/gost" ]]; then
 			wget -N --no-check-certificate "https://github.com/Mr-LongFly/gost/raw/master/gost.sh" && bash gost.sh
 		else 
-			echo "${Red_font_prefix}gost服务已经安装，请直接使用gost命令 !${Font_color_suffix}" && exit 1
+			echo "${Green_font_prefix}gost服务已经安装，请直接使用gost命令 !${Font_color_suffix}" && exit 1
 		fi
 	elif [[ ${other_num} == "3" ]]; then
 		Configure_LotServer
