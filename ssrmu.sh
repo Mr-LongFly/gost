@@ -279,7 +279,7 @@ urlsafe_base64(){
 	echo -e "${date}"
 }
 ss_link_qr(){
-	SSbase64=$(urlsafe_base64 "${method}:${password}@${ip}:${port}")
+	SSbase64=$(urlsafe_base64 "${method}:${password}@${ip}:${port}/?obfsparam=&group=bGZib3k")
 	SSurl="ss://${SSbase64}"
 	SSQRcode="http://qr.topscan.com/api.php?&w=200&text=${SSurl}"
 	ss_link=" SS    链接 : ${Green_font_prefix}${SSurl}${Font_color_suffix} \n SS  二维码 : ${Green_font_prefix}${SSQRcode}${Font_color_suffix}"
@@ -288,7 +288,7 @@ ssr_link_qr(){
 	SSRprotocol=$(echo ${protocol} | sed 's/_compatible//g')
 	SSRobfs=$(echo ${obfs} | sed 's/_compatible//g')
 	SSRPWDbase64=$(urlsafe_base64 "${password}")
-	SSRbase64=$(urlsafe_base64 "${ip}:${port}:${SSRprotocol}:${method}:${SSRobfs}:${SSRPWDbase64}")
+	SSRbase64=$(urlsafe_base64 "${ip}:${port}:${SSRprotocol}:${method}:${SSRobfs}:${SSRPWDbase64}/?obfsparam=&group=bGZib3k")
 	SSRurl="ssr://${SSRbase64}"
 	SSRQRcode="http://qr.topscan.com/api.php?&w=200&text=${SSRurl}"
 	ssr_link=" SSR   链接 : ${Red_font_prefix}${SSRurl}${Font_color_suffix} \n SSR 二维码 : ${Red_font_prefix}${SSRQRcode}${Font_color_suffix} \n "
