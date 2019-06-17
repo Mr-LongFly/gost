@@ -279,7 +279,7 @@ urlsafe_base64(){
 	echo -e "${date}"
 }
 ss_link_qr(){
-	SSbase64=$(urlsafe_base64 "${method}:${password}@${ip}:${port}/?obfsparam=&group=bGZib3k")
+	SSbase64=$(urlsafe_base64 "${method}:${password}@${ip}:${port}")
 	SSurl="ss://${SSbase64}"
 	SSQRcode="http://qr.topscan.com/api.php?&w=200&text=${SSurl}"
 	ss_link=" SS    链接 : ${Green_font_prefix}${SSurl}${Font_color_suffix} \n SS  二维码 : ${Green_font_prefix}${SSQRcode}${Font_color_suffix}"
